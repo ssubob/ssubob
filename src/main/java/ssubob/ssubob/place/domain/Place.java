@@ -1,4 +1,4 @@
-package ssubob.ssubob.domain;
+package ssubob.ssubob.place.domain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,11 +9,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import ssubob.ssubob.comment.domain.Comment;
 
 @Entity
 @Getter
@@ -28,17 +28,19 @@ public class Place {
 
 	private String image;
 
+	private String url;
+
 	private String category;
 
-	private Long locationX;
+	private Double locationX;
 
-	private Long locationY;
+	private Double locationY;
 
 	@OneToMany(mappedBy = "place")
 	private List<Comment> comments = new ArrayList<>();
 
 	@Builder
-	public Place(String title, String image, String category, Long locationX, Long locationY) {
+	public Place(String title, String image, String category, Double locationX, Double locationY) {
 		this.title = title;
 		this.image = image;
 		this.category = category;

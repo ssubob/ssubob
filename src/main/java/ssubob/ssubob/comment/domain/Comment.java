@@ -1,4 +1,4 @@
-package ssubob.ssubob.domain;
+package ssubob.ssubob.comment.domain;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import lombok.NoArgsConstructor;
+import ssubob.ssubob.place.domain.Place;
 
 @Entity
 @NoArgsConstructor
