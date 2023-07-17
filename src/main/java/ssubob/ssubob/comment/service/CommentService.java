@@ -15,23 +15,27 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final PlaceRepository placeRepository;
 
-    public void create(Long id, CommentCreate commentCreate) {
+    public Comment create(Long id, CommentCreate commentCreate) {
         Comment comment = Comment.builder()
                 .name(commentCreate.getName())
                 .content(commentCreate.getContent())
-                .place(placeRepository.findById(id).orElseThrow())
+                .place(placeRepository.findById(id)
+                        .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 식당입니다.")))
                 .build();
         commentRepository.save(comment);
+        return comment;
     }
 
     @Transactional
-    public void edit(Long commentId, CommentEdit commentEdit) {
+    public Comment edit(Long commentId, CommentEdit commentEdit) {
         Comment comment = commentRepository.findById(commentId).orElseThrow();
         comment.edit(commentEdit);
+        return comment;
     }
 
-    public void delete(Long commentId) {
+    public Comment delete(Long commentId) {
         Comment comment = commentRepository.findById(commentId).orElseThrow();
         commentRepository.delete(comment);
+        return comment;
     }
 }
