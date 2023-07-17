@@ -5,6 +5,8 @@ import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -40,9 +42,10 @@ public class Place {
 	private List<Comment> comments = new ArrayList<>();
 
 	@Builder
-	public Place(String title, String image, String category, Double locationX, Double locationY) {
+	public Place(String title, String image, String url, String category, Double locationX, Double locationY) {
 		this.title = title;
 		this.image = image;
+		this.url = url;
 		this.category = category;
 		this.locationX = locationX;
 		this.locationY = locationY;
