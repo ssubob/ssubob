@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import ssubob.ssubob.comment.repository.CommentRepository;
 import ssubob.ssubob.place.domain.Place;
 import ssubob.ssubob.place.repository.PlaceRepository;
 

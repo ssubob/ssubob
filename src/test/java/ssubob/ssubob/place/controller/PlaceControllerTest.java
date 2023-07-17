@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import ssubob.ssubob.comment.repository.CommentRepository;
 import ssubob.ssubob.place.domain.Place;
 import ssubob.ssubob.place.repository.PlaceRepository;
 import ssubob.ssubob.place.service.PlaceService;
@@ -22,9 +23,6 @@ import ssubob.ssubob.place.service.PlaceService;
 @SpringBootTest
 @AutoConfigureMockMvc
 class PlaceControllerTest {
-
-	@Autowired
-	protected PlaceService placeService;
 
 	@Autowired
 	protected PlaceRepository placeRepository;
