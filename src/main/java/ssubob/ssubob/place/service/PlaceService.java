@@ -15,4 +15,9 @@ public class PlaceService {
 	public List<Place> getPlaceList(String category) {
 		return placeRepository.findByCategory(category);
 	}
+
+	public Place getPlace(Long placeId) {
+		return placeRepository.findById(placeId)
+			.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 식당입니다."));
+	}
 }
