@@ -11,6 +11,7 @@ import ssubob.ssubob.place.domain.Place;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin
 public class CommentController {
     private final CommentService commentService;
 
