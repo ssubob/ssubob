@@ -35,6 +35,7 @@ public class PlaceService {
                 .address_name(placeCreate.getAddress_name())
                 .distance(Long.parseLong(placeCreate.getDistance()))
                 .apiId(Long.parseLong(placeCreate.getId()))
+                .image(placeCreate.getImage())
                 .build();
         Place createdPlace = placeRepository.findByApiId(place.getApiId()).orElse(null);
         if (createdPlace == null)

@@ -26,6 +26,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+    implementation 'org.jsoup:jsoup:1.14.2'
+    implementation 'net.sourceforge.htmlunit:htmlunit:2.70.0'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
     annotationProcessor 'org.projectlombok:lombok'
