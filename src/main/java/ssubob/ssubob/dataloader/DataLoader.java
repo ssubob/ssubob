@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -20,41 +21,78 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class DataLoader {
     private final ObjectMapper objectMapper;
 
     private final PlaceService placeService;
 
-    @Value("${kakao-admin-key}")
-    private String kakao_admin_key;
+    @Value("${api-key}")
+    private String apiKey;
 
-    @NoArgsConstructor
+    @Value("${api-url}")
+    private String apiUrl;
+
+    private int requestCnt;
+
     @Getter
-    static class APIResponse {
+    private static class APIResponse {
         private List<PlaceCreate> documents;
 
-        public APIResponse(List<PlaceCreate> documents) {
-            this.documents = documents;
+        private Meta meta;
+
+        @Getter
+        private static class Meta {
+            private Integer total_count;
         }
     }
 
-    @Scheduled(fixedDelay = 86400000)
-        //하루
-    void loadData() throws IOException {
+    void loadData(String url, int dataCnt) throws IOException {
+        int cnt = 0;
         OkHttpClient client = new OkHttpClient();
-        String requestUrl = "https://dapi.kakao.com/v2/local/search/category.json?category_group_code=FD6&x=126.95781764313084&y=37.495853033944364&radius=1000&page=";
 
-        for (int page = 1; page <= 45; page++) {
+        for (int page = 1; page <= 3 && cnt < dataCnt; page++) {
             Request request = new Request.Builder()
-                    .url(requestUrl + page)
-                    .header("Authorization", "KakaoAK 36b3539b5e74d8297a6237d3f70ebf38")
+                    .url(url + "&page=" + page)
+                    .header("Authorization", apiKey)
                     .build();
-
             Response response = client.newCall(request).execute();
-
             APIResponse apiResponse = objectMapper.readValue(response.body().string(), APIResponse.class);
-            for (PlaceCreate placeCreate : apiResponse.getDocuments())
+            for (PlaceCreate placeCreate : apiResponse.getDocuments()) {
                 placeService.create(placeCreate);
+                cnt++;
+            }
         }
+    }
+
+    void findRange(double x1, double y1, double x2, double y2) throws IOException {
+        requestCnt++;
+        if (requestCnt >= 1000) {
+            log.error("too many findRange() call");
+            return;
+        }
+        OkHttpClient client = new OkHttpClient();
+        String url = apiUrl + "&rect=" + x1 + "," + y1 + "," + x2 + "," + y2;
+        Request request = new Request.Builder()
+                .url(url)
+                .header("Authorization", apiKey)
+                .build();
+        Response response = client.newCall(request).execute();
+        APIResponse apiResponse = objectMapper.readValue(response.body().string(), APIResponse.class);
+        if (apiResponse.getMeta().getTotal_count() <= 45) {
+            loadData(url, apiResponse.getMeta().getTotal_count());
+            return;
+        }
+        double mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+        findRange(x1, y1, mx, my);
+        findRange(mx, y1, x2, my);
+        findRange(x1, my, mx, y2);
+        findRange(mx, my, x2, y2);
+    }
+
+    @Scheduled(fixedDelay = 86400000)
+    void updateData() throws IOException {
+        requestCnt = 0;
+        findRange(126.95009, 37.49036, 126.96424, 37.50009);
     }
 }

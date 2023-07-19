@@ -8,7 +8,6 @@ import lombok.ToString;
 
 @Getter
 @NoArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
 @ToString
 public class PlaceCreate {
     private String id;

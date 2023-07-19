@@ -31,16 +31,29 @@ public class Place {
 
 	private Double locationY;
 
+	private String phone;
+
+	private String address_name;
+
+	private Long distance;
+
+	private Long apiId;
+
 	@OneToMany(mappedBy = "place", cascade = CascadeType.ALL)
 	private List<Comment> comments = new ArrayList<>();
 
 	@Builder
-	public Place(String title, String image, String url, String category, Double locationX, Double locationY) {
+
+	public Place(String title, String image, String url, String category, Double locationX, Double locationY, String phone, String address_name, Long distance, Long apiId) {
 		this.title = title;
 		this.image = image;
 		this.url = url;
 		this.category = category;
 		this.locationX = locationX;
 		this.locationY = locationY;
+		this.phone = phone;
+		this.address_name = address_name;
+		this.distance = distance;
+		this.apiId = apiId;
 	}
 }
