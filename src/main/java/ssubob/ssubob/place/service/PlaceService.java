@@ -15,7 +15,7 @@ import ssubob.ssubob.place.request.PlaceCreate;
 public class PlaceService {
     private final PlaceRepository placeRepository;
 
-    public List<Place> getPlaceList(String category) {
+    public List<Place> getPlaceListByCategory(String category) {
         return placeRepository.findByCategory(category);
     }
 
@@ -46,5 +46,9 @@ public class PlaceService {
     public Place getPlace(Long placeId) {
         return placeRepository.findById(placeId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 식당입니다."));
+    }
+
+    public List<Place> getPlaceList() {
+        return placeRepository.findAll();
     }
 }

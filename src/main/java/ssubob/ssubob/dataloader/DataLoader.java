@@ -71,7 +71,7 @@ public class DataLoader {
                 if(!elements.isEmpty()){
                     String style = elements.first().attr("style");
                     if(style.contains("(")&&style.contains(")"))
-                        placeCreate.setImage(style.split("\\(|\\)")[1]);
+                        placeCreate.setImage("https:"+style.split("\\(\\'|\\'\\)")[1]);
                 }
                 placeService.create(placeCreate);
                 cnt++;

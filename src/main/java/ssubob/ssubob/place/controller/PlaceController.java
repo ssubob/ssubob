@@ -20,14 +20,20 @@ public class PlaceController {
 
 	private final PlaceService placeService;
 	@GetMapping("/place/{category}")
-	public List<Place> getPlaceList(@PathVariable String category){
-		return placeService.getPlaceList(category);
+	public List<Place> getPlaceListByCategory(@PathVariable String category){
+		return placeService.getPlaceListByCategory(category);
 	}
 
 	@GetMapping("/place/{category}/{placeId}")
 	public Place getPlace(@PathVariable Long placeId){
 		return placeService.getPlace(placeId);
 	}
+
+	@GetMapping("/place")
+	public List<Place> getPlaceList(){
+		return placeService.getPlaceList();
+	}
+
 
 
 }
