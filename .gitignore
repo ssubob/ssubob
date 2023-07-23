@@ -37,4 +37,4 @@ out/
 .vscode/
 
 ### API KEY ###
-src/main/resources/application-api.properties
+application-api.yml
