@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,8 +21,9 @@ public class PlaceController {
 
 	private final PlaceService placeService;
 	@GetMapping("/place/{category}")
-	public List<Place> getPlaceListByCategory(@PathVariable String category){
-		return placeService.getPlaceListByCategory(category);
+	public ResponseEntity<List<Place>> getPlaceListByCategory(@PathVariable String category){
+		List<Place> places = placeService.getPlaceListByCategory(category);
+		return ResponseEntity.ok(places);
 	}
 
 	@GetMapping("/place/{category}/{placeId}")

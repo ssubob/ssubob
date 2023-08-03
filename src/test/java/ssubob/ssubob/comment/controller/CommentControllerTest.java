@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -50,6 +51,7 @@ class CommentControllerTest {
 
     @DisplayName("댓글을 작성한다.")
     @Test
+    @WithMockUser
     void create() throws Exception {
         //given
         Place place = Place.builder()
@@ -77,6 +79,7 @@ class CommentControllerTest {
 
     @DisplayName("댓글을 수정한다.")
     @Test
+    @WithMockUser
     void edit() throws Exception {
         //given
         Place place = Place.builder()
@@ -111,6 +114,7 @@ class CommentControllerTest {
 
     @DisplayName("댓글을 삭제한다.")
     @Test
+    @WithMockUser
     void delete() throws Exception {
         //given
         Place place = Place.builder()

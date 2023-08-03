@@ -13,40 +13,59 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ssubob.ssubob.comment.repository.CommentRepository;
 import ssubob.ssubob.place.domain.Place;
 import ssubob.ssubob.place.repository.PlaceRepository;
+import ssubob.ssubob.place.request.PlaceCreate;
 
 @SpringBootTest
 class PlaceServiceTest {
 
-	@Autowired
-	protected PlaceRepository placeRepository;
+    @Autowired
+    protected PlaceRepository placeRepository;
 
-	@BeforeEach
-	void clean() {
-		placeRepository.deleteAll();
-	}
+    @Autowired
+    private PlaceService placeService;
 
-	@Test
-	@DisplayName("카테고리가 일식인 음식점 조회")
-	void test1() {
-		//given
-		Place place = Place.builder()
-			.title("마루스시")
-			.category("일식")
-			.build();
+    @BeforeEach
+    void clean() {
+        placeRepository.deleteAll();
+    }
 
-		Place place2 = Place.builder()
-			.title("은화수식당")
-			.category("일식")
-			.build();
+    @Test
+    @DisplayName("카테고리가 일식인 음식점 조회")
+    void test1() {
+        //given
+        PlaceCreate place = PlaceCreate.builder()
+                .place_name("마루스시")
+                .place_url("www.test.com")
+                .category_name("일식")
+                .x("321.3")
+                .y("123.4")
+                .phone("010-1234-1234")
+                .address_name("가나다")
+                .distance("732")
+                .id("5")
+                .image("www.image.com")
+                .build();
 
-		placeRepository.save(place);
-		placeRepository.save(place2);
-		//when
-		List<Place> placeList = placeRepository.findByCategory("일식");
-		//Place findPlace = placeList.get(0);
+        PlaceCreate place2 = PlaceCreate.builder()
+				.place_name("은화수식당")
+				.place_url("www.test.com")
+				.category_name("일식")
+				.x("321.3")
+				.y("123.4")
+				.phone("010-1234-1234")
+				.address_name("가나다")
+				.distance("732")
+				.id("7")
+				.image("www.image.com")
+				.build();
 
-		//then
-		assertEquals(placeList.size(), 2);
-	}
+        //when
+        placeService.create(place);
+        placeService.create(place2);
+
+        //then
+        List<Place> placeList = placeRepository.findByCategory("일식");
+        assertEquals(placeList.size(), 2);
+    }
 
 }
