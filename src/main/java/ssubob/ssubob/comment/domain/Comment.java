@@ -1,6 +1,9 @@
 package ssubob.ssubob.comment.domain;
 
 import java.time.LocalDateTime;
+import java.util.Date;
+
+import org.springframework.security.core.Authentication;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
@@ -17,6 +20,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import ssubob.ssubob.comment.request.CommentEdit;
 import ssubob.ssubob.place.domain.Place;
+import ssubob.ssubob.user.domain.User;
 
 @Entity
 @Getter
@@ -39,15 +43,19 @@ public class Comment {
 
     private LocalDateTime createdAt;
 
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Builder
-    public Comment(String name, String content, Place place) {
+    public Comment(String name, String content, Place place, User user) {
         this.name = name;
         this.content = content;
         this.place = place;
+        this.createdAt = LocalDateTime.now();
+        this.user = user;
     }
 
-    public void edit(CommentEdit commentEdit) {
-        name = commentEdit.getName();
-        content = commentEdit.getContent();
-    }
+
 }

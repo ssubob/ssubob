@@ -39,10 +39,11 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+            .cors()
+            .and()
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(
                                 new AntPathRequestMatcher("/user/create"),
-                                new AntPathRequestMatcher("/token"),
                                 PathRequest.toH2Console())
                         .permitAll()
                         .anyRequest()

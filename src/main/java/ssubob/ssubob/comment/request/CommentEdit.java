@@ -10,15 +10,12 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class CommentEdit {
-    @NotBlank(message = "이름을 입력해주세요.")
-    private String name;
 
     @NotBlank(message = "내용을 입력해주세요.")
     private String content;
 
     @Builder
-    public CommentEdit(String name, String content) {
-        this.name = name;
+    public CommentEdit(String content) {
         this.content = content;
     }
 }
