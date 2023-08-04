@@ -34,6 +34,7 @@ public class UserService implements UserDetailsService {
         User user = User.builder()
                 .email(userCreate.getEmail())
                 .password(bCryptPasswordEncoder.encode(userCreate.getPassword()))
+                .nickname(userCreate.getNickname())
                 .build();
         userRepository.save(user);
         return user;

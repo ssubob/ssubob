@@ -1,19 +1,19 @@
 package ssubob.ssubob.user.controller;
 
 import jakarta.validation.Valid;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ssubob.ssubob.user.domain.User;
 import ssubob.ssubob.user.request.UserCreate;
 import ssubob.ssubob.user.service.UserService;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
+@CrossOrigin
 public class UserController {
     private final UserService userService;
 
