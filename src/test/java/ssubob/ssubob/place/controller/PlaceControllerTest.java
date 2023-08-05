@@ -62,7 +62,7 @@ class PlaceControllerTest {
         placeRepository.save(place);
         placeRepository.save(place2);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/place/{category}", "일식")
+        mockMvc.perform(MockMvcRequestBuilders.get("/place/category/{category}", "일식")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].title").value("마루스시"))

@@ -52,9 +52,10 @@ class TokenControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
         String token = result.getResponse().getContentAsString();
-        mockMvc.perform(MockMvcRequestBuilders.get("/place/한식")
+        mockMvc.perform(MockMvcRequestBuilders.get("/user/nickname")
                         .header("Authorization", "Bearer " + token))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$").value(user.getNickname()));
     }
 
     @Test

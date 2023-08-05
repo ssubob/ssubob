@@ -20,13 +20,13 @@ import ssubob.ssubob.place.service.PlaceService;
 public class PlaceController {
 
 	private final PlaceService placeService;
-	@GetMapping("/place/{category}")
+	@GetMapping("/place/category/{category}")
 	public ResponseEntity<List<Place>> getPlaceListByCategory(@PathVariable String category){
 		List<Place> places = placeService.getPlaceListByCategory(category);
 		return ResponseEntity.ok(places);
 	}
 
-	@GetMapping("/place/{category}/{placeId}")
+	@GetMapping("/place/{placeId}")
 	public Place getPlace(@PathVariable Long placeId){
 		return placeService.getPlace(placeId);
 	}

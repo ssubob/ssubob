@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ssubob.ssubob.user.domain.User;
@@ -23,5 +24,10 @@ public class UserController {
         if (user == null)
             return ResponseEntity.badRequest().build();
         return ResponseEntity.ok().body(user);
+    }
+
+    @GetMapping("/nickname")
+    public String getNickname(Authentication authentication){
+        return userService.getNickname(authentication.getName());
     }
 }
