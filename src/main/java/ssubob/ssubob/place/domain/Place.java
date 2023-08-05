@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import ssubob.ssubob.comment.domain.Comment;
+import ssubob.ssubob.like.domain.Like;
 
 @Entity
 @Getter
@@ -42,8 +43,10 @@ public class Place {
 	@OneToMany(mappedBy = "place", cascade = CascadeType.ALL)
 	private List<Comment> comments = new ArrayList<>();
 
-	@Builder
+	@OneToMany(mappedBy = "place" ,cascade = CascadeType.ALL)
+	private List<Like> likes = new ArrayList<>();
 
+	@Builder
 	public Place(String title, String image, String url, String category, Double locationX, Double locationY, String phone, String address_name, Long distance, Long apiId) {
 		this.title = title;
 		this.image = image;
