@@ -52,12 +52,10 @@ class CommentServiceTest {
 
         Authentication authentication = new UsernamePasswordAuthenticationToken("kim@naver.com", "1234");
 
-        Place place = Place.builder()
+        Place place = placeRepository.save(Place.builder()
                 .title("마루스시")
                 .category("일식")
-                .build();
-
-        placeRepository.save(place);
+                .build());
 
         User user = User.builder()
             .email("kim@naver.com")
@@ -72,7 +70,7 @@ class CommentServiceTest {
                 .build();
 
         //when
-        commentService.create(1L, commentCreate, authentication);
+        commentService.create(place.getId(), commentCreate, authentication);
 
         //then
         Comment comment = commentRepository.findAll().get(0);
