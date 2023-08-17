@@ -43,6 +43,12 @@ public class PlaceService {
         return createdPlace;
     }
 
+    public boolean isLoaded(Long apiId) {
+        if (placeRepository.findByApiId(apiId).orElse(null) != null)
+            return true;
+        return false;
+    }
+
     public Place getPlace(Long placeId) {
         return placeRepository.findById(placeId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 식당입니다."));

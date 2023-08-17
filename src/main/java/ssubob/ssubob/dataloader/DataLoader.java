@@ -63,18 +63,20 @@ public class DataLoader {
             Response response = client.newCall(request).execute();
             APIResponse apiResponse = objectMapper.readValue(response.body().string(), APIResponse.class);
             for (PlaceCreate placeCreate : apiResponse.getDocuments()) {
+                cnt++;
+                if (placeService.isLoaded(Long.parseLong(placeCreate.getId()))) //이미 DB에 저장된 식당의 데이터일 경우 크롤링을 하지 않음.
+                    continue;
                 WebClient webClient = new WebClient();
                 webClient.getOptions().setJavaScriptEnabled(true);
                 HtmlPage htmlPage = webClient.getPage(placeCreate.getPlace_url());
                 webClient.waitForBackgroundJavaScript(5000);
                 Elements elements = Jsoup.parse(htmlPage.asXml()).select("span.bg_present");
-                if(!elements.isEmpty()){
+                if (!elements.isEmpty()) {
                     String style = elements.first().attr("style");
-                    if(style.contains("(")&&style.contains(")"))
-                        placeCreate.setImage("https:"+style.split("\\(\\'|\\'\\)")[1]);
+                    if (style.contains("(") && style.contains(")"))
+                        placeCreate.setImage("https:" + style.split("\\(\\'|\\'\\)")[1]);
                 }
                 placeService.create(placeCreate);
-                cnt++;
             }
         }
     }
