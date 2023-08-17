@@ -5,15 +5,20 @@ spring:
             path: /h2-console
 
     datasource:
-        url: jdbc:h2:mem:ssubob
-        username: sa
-        password:
-        driver-class-name: org.h2.Driver
+        url: jdbc:mysql://127.0.0.1:3306/ssubob?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+        username: root
+        password: root
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        #url: jdbc:h2:mem:ssubob
+        #username: sa
+        #password:
+        #driver-class-name: org.h2.Driver
+
     jpa:
         defer-datasource-initialization: false
         show-sql: true
         hibernate:
-            ddl-auto: create-drop
+            ddl-auto: update
         properties:
             hibernate:
                 format_sql: true
