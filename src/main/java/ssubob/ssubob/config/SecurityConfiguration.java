@@ -39,8 +39,8 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .cors()
-            .and()
+                .cors()
+                .and()
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(
                                 new AntPathRequestMatcher("/user/create"),
@@ -49,7 +49,7 @@ public class SecurityConfiguration {
                         .anyRequest()
                         .authenticated())
                 .csrf(csrf -> csrf.disable())
-                .headers(header->header.frameOptions().sameOrigin())
+                .headers(header -> header.frameOptions().sameOrigin())
                 .httpBasic(Customizer.withDefaults())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
